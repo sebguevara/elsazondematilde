@@ -3,15 +3,22 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Clock, Download, GalleryVertical, Home, MapPin, Menu, PhoneCall } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import type { BrandInfo } from '@/types/content'
 
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>
+}
+
 const sectionLinks = [
-  { href: '#inicio', label: 'Inicio' },
-  { href: '#menu', label: 'Menu' },
-  { href: '#galeria', label: 'Galeria' },
-  { href: '#horario', label: 'Horarios' },
-  { href: '#contacto', label: 'Contacto' },
+  { href: '#inicio', label: 'Inicio', Icon: Home },
+  { href: '#menu', label: 'Menu', Icon: Menu },
+  { href: '#galeria', label: 'Galeria', Icon: GalleryVertical },
+  { href: '#horario', label: 'Horarios', Icon: Clock },
+  { href: '#contacto', label: 'Contacto', Icon: MapPin },
 ]
 
 interface SiteShellHeaderProps {
@@ -21,6 +28,8 @@ interface SiteShellHeaderProps {
 export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
   const pathname = usePathname()
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+  const [isStandalone, setIsStandalone] = useState(false)
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
 
   if (
     pathname.startsWith('/dashboard') ||
@@ -31,6 +40,45 @@ export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
   }
 
   const isHome = pathname === '/'
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const detect = () => {
+      const standalone =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.matchMedia('(display-mode: fullscreen)').matches ||
+        (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+      setIsStandalone(standalone)
+    }
+
+    const handleAppInstalled = () => setIsStandalone(true)
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault()
+      setDeferredPrompt(event as BeforeInstallPromptEvent)
+    }
+
+    window.addEventListener('appinstalled', handleAppInstalled)
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    detect()
+
+    return () => {
+      window.removeEventListener('appinstalled', handleAppInstalled)
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    }
+  }, [])
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) {
+      return
+    }
+
+    await deferredPrompt.prompt()
+    await deferredPrompt.userChoice
+    setDeferredPrompt(null)
+  }
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-matilde-yellow/50 bg-matilde-cream/95 backdrop-blur">
@@ -59,7 +107,10 @@ export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
                 href={item.href}
                 className="rounded-full px-3 py-2 text-sm font-semibold text-matilde-brown transition-colors hover:bg-matilde-yellow-light hover:text-matilde-red"
               >
-                {item.label}
+                <span className="inline-flex items-center gap-2">
+                  <item.Icon className="h-3.5 w-3.5 text-matilde-red" />
+                  {item.label}
+                </span>
               </Link>
             ))
           ) : (
@@ -72,6 +123,18 @@ export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
           )}
         </nav>
 
+        {!isStandalone && deferredPrompt && (
+          <div className="ml-auto hidden items-center gap-3 lg:flex">
+            <Button
+              type="button"
+              onClick={handleInstall}
+              className="inline-flex items-center gap-2 rounded-full border border-matilde-red/80 bg-matilde-red px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-matilde-red-dark"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Descargar app</span>
+            </Button>
+          </div>
+        )}
         <div className="ml-auto sm:hidden">
           <button
             type="button"
@@ -114,7 +177,10 @@ export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
                   onClick={() => setIsMobileNavOpen(false)}
                   className="rounded-xl bg-white px-3 py-2.5 text-sm font-semibold text-matilde-brown shadow-sm transition-colors hover:bg-matilde-yellow-light hover:text-matilde-red"
                 >
-                  {item.label}
+                  <span className="inline-flex items-center gap-2">
+                    <item.Icon className="h-4 w-4 text-matilde-red" />
+                    {item.label}
+                  </span>
                 </Link>
               ))
             ) : (
@@ -125,6 +191,19 @@ export function SiteShellHeader({ brand }: SiteShellHeaderProps) {
               >
                 Volver al inicio
               </Link>
+            )}
+            {!isStandalone && deferredPrompt && (
+              <button
+                type="button"
+                onClick={() => {
+                  handleInstall()
+                  setIsMobileNavOpen(false)
+                }}
+                className="flex items-center justify-center gap-2 rounded-xl border border-matilde-yellow bg-white px-3 py-2.5 text-sm font-semibold text-matilde-red shadow-sm transition-colors hover:bg-matilde-yellow-light"
+              >
+                <Download className="h-4 w-4" />
+                Descargar app
+              </button>
             )}
           </div>
         </div>

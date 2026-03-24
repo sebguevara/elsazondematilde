@@ -1,6 +1,8 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Instagram, MapPin, Phone } from 'lucide-react'
 import type { BrandInfo, ContactInfo, FooterContent } from '@/types/content'
+import { InstallFooterCTA } from './install-footer-cta'
 
 interface FooterSectionProps {
   brand: BrandInfo
@@ -50,6 +52,8 @@ export function FooterSection({ brand, contact, footer }: FooterSectionProps) {
               </a>
             )}
           </div>
+
+          <InstallFooterCTA />
 
           <div className="mb-4 h-0.5 w-24 bg-matilde-yellow/30" />
           <p className="text-sm text-white/60">{footer.copyright}</p>
