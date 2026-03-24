@@ -1,82 +1,109 @@
-import BetterSqlite from 'better-sqlite3'
-import type { Database as BetterSqliteType } from 'better-sqlite3'
-import { existsSync, mkdirSync, readFileSync } from 'fs'
+import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { existsSync, readFileSync } from 'fs'
 import path from 'path'
+import { Readable } from 'stream'
 import type { SiteContent } from '@/types/content'
 
+const BUCKET = process.env.BUCKET_NAME
+const ENDPOINT = process.env.CLOUDFARE_ENDPOINT
+const ACCESS_KEY_ID = process.env.ACCESS_KEY_ID
+const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY
+const PUBLIC_URL = process.env.R2_PUBLIC_URL
+const KEY = 'site-content.json'
 const CONTENT_DIR = path.join(process.cwd(), 'content')
-const DB_PATH = path.join(CONTENT_DIR, 'site-content.db')
 const JSON_PATH = path.join(CONTENT_DIR, 'site-content.json')
-const CONTENT_ID = 'site'
-const CREATE_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS site_content (
-    id TEXT PRIMARY KEY,
-    payload TEXT NOT NULL
-  );
-`
-const INSERT_SQL = 'INSERT OR REPLACE INTO site_content (id, payload) VALUES (?, ?)'
 
-let database: BetterSqliteType | null = null
-
-function ensureContentDir() {
-  if (!existsSync(CONTENT_DIR)) {
-    mkdirSync(CONTENT_DIR, { recursive: true })
-  }
+if (!BUCKET || !ENDPOINT || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY || !PUBLIC_URL) {
+  console.warn('Cloudflare R2 is not fully configured; content API will use local template only.')
 }
 
-function getDatabase(): BetterSqliteType {
-  if (database) {
-    return database
+function getClient() {
+  if (!BUCKET || !ENDPOINT || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
+    throw new Error('Cloudflare R2 is not configured')
   }
 
-  ensureContentDir()
-  const existed = existsSync(DB_PATH)
-  database = new BetterSqlite(DB_PATH)
-  database.prepare(CREATE_TABLE_SQL).run()
-
-  if (!existed) {
-    const initial = loadInitialContent()
-    database.prepare(INSERT_SQL).run(CONTENT_ID, JSON.stringify(initial))
-  }
-
-  return database
+  return new S3Client({
+    region: 'auto',
+    endpoint: ENDPOINT,
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+    },
+  })
 }
 
-function loadInitialContent(): SiteContent {
+async function readBody(body?: Readable | undefined) {
+  if (!body) return ''
+
+  const chunks: Buffer[] = []
+  for await (const chunk of body) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
+  }
+
+  return Buffer.concat(chunks).toString('utf-8')
+}
+
+function loadLocalTemplate(): SiteContent {
   if (!existsSync(JSON_PATH)) {
-    throw new Error('Missing site-content.json template for initialization')
+    throw new Error('site-content.json template missing')
   }
 
   const raw = readFileSync(JSON_PATH, 'utf-8')
   return JSON.parse(raw) as SiteContent
 }
 
+async function uploadToR2(content: string) {
+  const client = getClient()
+  await client.send(
+    new PutObjectCommand({
+      Bucket: BUCKET,
+      Key: KEY,
+      Body: content,
+      ContentType: 'application/json',
+      CacheControl: 'no-cache',
+    }),
+  )
+}
+
 export async function getSiteContent(): Promise<SiteContent> {
-  try {
-    const db = getDatabase()
-    const row = db
-      .prepare('SELECT payload FROM site_content WHERE id = ?')
-      .get(CONTENT_ID) as { payload: string } | undefined
-
-    if (row?.payload) {
-      return JSON.parse(row.payload) as SiteContent
-    }
-
-    const fallback = loadInitialContent()
-    await updateSiteContent(fallback)
-    return fallback
-  } catch (error) {
-    console.error('Error reading site content:', error)
-    throw new Error('Failed to load site content')
+  if (!BUCKET) {
+    return loadLocalTemplate()
   }
+
+  try {
+    const client = getClient()
+    const response = await client.send(
+      new GetObjectCommand({
+        Bucket: BUCKET,
+        Key: KEY,
+      }),
+    )
+
+    const payload = await readBody(response.Body as Readable)
+    if (payload) {
+      return JSON.parse(payload) as SiteContent
+    }
+  } catch (error) {
+    const message = (error as Error).message || ''
+    if (!message.includes('NoSuchKey')) {
+      console.error('Error fetching site content from R2:', error)
+    }
+  }
+
+  const fallback = loadLocalTemplate()
+  await uploadToR2(JSON.stringify(fallback))
+  return fallback
 }
 
 export async function updateSiteContent(content: SiteContent): Promise<void> {
+  if (!BUCKET) {
+    throw new Error('Cloudflare R2 bucket not configured')
+  }
+
   try {
-    const db = getDatabase()
-    db.prepare(INSERT_SQL).run(CONTENT_ID, JSON.stringify(content))
+    await uploadToR2(JSON.stringify(content))
   } catch (error) {
-    console.error('Error updating site content:', error)
+    console.error('Error updating site content on R2:', error)
     throw new Error('Failed to update site content')
   }
 }
