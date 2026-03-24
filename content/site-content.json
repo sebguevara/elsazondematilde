@@ -1,0 +1,267 @@
+{
+  "brand": {
+    "name": "El Sazón de Matilde's",
+    "tagline": "Sazón Casero",
+    "logo": "https://matilde.4gentle.com/brand/2026-03-23/6d4ce1cf-1faa-49e3-898a-3cd3181cbb54-9.webp",
+    "logoAlt": "https://matilde.4gentle.com/brand/2026-03-23/a985eed4-3e47-4043-9b37-30c819dae5cc-11.webp"
+  },
+  "hero": {
+    "title": "Empanadas con el sazón de la abuela",
+    "subtitle": "Recetas tradicionales colombianas, hechas con amor y los mejores ingredientes. El sabor de casa, directo a tu puerta.",
+    "ctaText": "Pedí por WhatsApp",
+    "badge": "Hechas con sazón casero"
+  },
+  "contact": {
+    "whatsappNumber": "573204583723",
+    "whatsappMessage": "¡Hola! Quiero hacer un pedido:",
+    "phone": "320 4583723",
+    "address": "",
+    "nequiNumber": "300 6614547"
+  },
+  "categories": [
+    {
+      "id": "empanadas",
+      "name": "Empanadas",
+      "order": 1
+    },
+    {
+      "id": "bebidas",
+      "name": "Bebidas",
+      "order": 2
+    }
+  ],
+  "menu": [
+    {
+      "id": "emp-tradicional",
+      "name": "Tradicional",
+      "description": "Masa de maíz con relleno de papa y carne",
+      "price": 2000,
+      "category": "empanadas",
+      "image": "https://matilde.4gentle.com/menu/2026-03-23/55e6439f-e957-4ad7-a2a4-80291f4bc41b-tradicional.webp",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "emp-pollo",
+      "name": "Pollo",
+      "description": "Pollo, jamón, queso, salsa champiñón",
+      "price": 3500,
+      "category": "empanadas",
+      "image": "https://matilde.4gentle.com/menu/2026-03-23/4c75a0ac-5ba9-4abf-aa39-f59049484d73-pollo.webp",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "emp-hawaiana",
+      "name": "Hawaiana",
+      "description": "Piña, jamón y queso",
+      "price": 3500,
+      "category": "empanadas",
+      "image": "https://matilde.4gentle.com/menu/2026-03-23/e35d3650-138b-4d6d-950b-4c40f67eb222-hawaina.webp",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "emp-ranchera",
+      "name": "Ranchera",
+      "description": "Chorizo, jamón, queso, maíz y salsa BBQ",
+      "price": 3500,
+      "category": "empanadas",
+      "image": "https://matilde.4gentle.com/menu/2026-03-23/aeacdb9c-a4b2-4e40-a9d9-41ebb9ccc1c5-ranchera.webp",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "beb-masato",
+      "name": "Masato",
+      "description": "Bebida tradicional de arroz",
+      "price": 1000,
+      "priceSmall": 1000,
+      "priceLarge": 2000,
+      "category": "bebidas",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "beb-avena",
+      "name": "Avena",
+      "description": "Avena casera fría",
+      "price": 1000,
+      "priceSmall": 1000,
+      "priceLarge": 2000,
+      "category": "bebidas",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "beb-gaseosa-vaso",
+      "name": "Gaseosa Vaso",
+      "description": "Gaseosa servida en vaso",
+      "price": 500,
+      "priceSmall": 500,
+      "priceLarge": 1000,
+      "category": "bebidas",
+      "featured": false,
+      "available": true
+    },
+    {
+      "id": "beb-gaseosa-personal",
+      "name": "Gaseosa Personal",
+      "description": "Gaseosa botella personal",
+      "price": 3500,
+      "category": "bebidas",
+      "featured": false,
+      "available": true
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1774308897268",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/8330d6f3-4e06-4989-9bf4-01dd91fd7c6b-empanadas-1.webp",
+      "alt": "Empanda de pollo",
+      "order": 1,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "id": "gal-1774308950727",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/caf46604-551c-4540-babf-25dbf6e78113-empanadas-2.webp",
+      "alt": "Empanada de pollo 2",
+      "order": 2,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "id": "gal-1774308974133",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/542651fa-c567-4be2-aad0-c2dc4a0a0acc-empanadas-3.webp",
+      "alt": "Empanada de pollo 3",
+      "order": 3,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1706
+    },
+    {
+      "id": "gal-1774309017517",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/f1bcdb2b-7d6c-4141-8989-108115128bc0-empanadas-4.webp",
+      "alt": "Empanada Ranchera",
+      "order": 4,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "id": "gal-1774309045266",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/87d61dd4-9460-46b6-bf6b-0e939485d5da-empanadas-5.webp",
+      "alt": "Empanada Ranchera 2",
+      "order": 5,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "id": "gal-1774309058443",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/b30a8a1f-2e5a-41b1-b724-fe0c94629944-empanadas-6.webp",
+      "alt": "Empanada Ranchera 3",
+      "order": 6,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1600
+    },
+    {
+      "id": "gal-1774309075277",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/5a20a94c-4d13-4bf9-8b14-562c65e13119-empanadas-7.webp",
+      "alt": "Empanada Haw",
+      "order": 7,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1600
+    },
+    {
+      "id": "gal-1774309084365",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/06ee5b5c-359c-4115-9dba-9138481fe0b0-empanadas-8.webp",
+      "alt": "Empanada Haw 2",
+      "order": 8,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    },
+    {
+      "id": "gal-1774309093130",
+      "url": "https://matilde.4gentle.com/gallery/2026-03-23/91c07960-413b-4541-a94a-a6a894d5796b-empanadas-9.webp",
+      "alt": "Empanada Haw 3",
+      "order": 9,
+      "fit": "cover",
+      "width": 1280,
+      "height": 1707
+    }
+  ],
+  "hours": [
+    {
+      "day": "Lunes",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Martes",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Miércoles",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Jueves",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Viernes",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Sábado",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": true
+    },
+    {
+      "day": "Domingo",
+      "open": "16:30",
+      "close": "19:30",
+      "enabled": false
+    }
+  ],
+  "paymentMethods": [
+    {
+      "id": "pm-efectivo",
+      "name": "Efectivo",
+      "enabled": true
+    },
+    {
+      "id": "pm-nequi",
+      "name": "Nequi",
+      "details": "300 6614547",
+      "enabled": true
+    },
+    {
+      "id": "pm-transferencia",
+      "name": "Transferencia",
+      "enabled": true
+    }
+  ],
+  "footer": {
+    "text": "El mejor sabor casero de empanadas colombianas",
+    "copyright": "© 2026 El Sazón de Matilde's. Todos los derechos reservados.",
+    "instagram": "https://www.instagram.com/elsazondematilde/"
+  }
+}

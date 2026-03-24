@@ -1,0 +1,178 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* El Sazón de Matilde's - Colores Cálidos Colombianos */
+:root {
+  /* Colores principales de la marca */
+  --matilde-yellow: #FFD270;
+  --matilde-yellow-light: #FDF0C4;
+  --matilde-red: #A52A2A;
+  --matilde-red-dark: #8B2323;
+  --matilde-cream: #FFF8E7;
+  --matilde-brown: #5D4037;
+
+  /* Scrollbar (brand) */
+  --matilde-scrollbar-size: 8px;
+  --matilde-scrollbar-track: rgba(255, 248, 231, 0.75);
+  --matilde-scrollbar-thumb: rgba(165, 42, 42, 0.55);
+  --matilde-scrollbar-thumb-hover: rgba(139, 35, 35, 0.7);
+  
+  /* Sistema de colores */
+  --background: #FFF8E7;
+  --foreground: #3D2914;
+  --card: #FFFFFF;
+  --card-foreground: #3D2914;
+  --popover: #FFFFFF;
+  --popover-foreground: #3D2914;
+  --primary: #A52A2A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFD270;
+  --secondary-foreground: #3D2914;
+  --muted: #FDF0C4;
+  --muted-foreground: #6B5B4F;
+  --accent: #FFD270;
+  --accent-foreground: #3D2914;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E8D5B5;
+  --input: #E8D5B5;
+  --ring: #A52A2A;
+  --radius: 0.75rem;
+  
+  /* Charts */
+  --chart-1: #A52A2A;
+  --chart-2: #FFD270;
+  --chart-3: #5D4037;
+  --chart-4: #8B2323;
+  --chart-5: #FDF0C4;
+  
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #3D2914;
+  --sidebar-primary: #A52A2A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #FDF0C4;
+  --sidebar-accent-foreground: #3D2914;
+  --sidebar-border: #E8D5B5;
+  --sidebar-ring: #A52A2A;
+}
+
+@theme inline {
+  --font-sans: 'Nunito', 'Nunito Fallback', sans-serif;
+  --font-serif: 'Lilita One', 'Lilita One Fallback', cursive;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  
+  /* Colores de marca accesibles via Tailwind */
+  --color-matilde-yellow: var(--matilde-yellow);
+  --color-matilde-yellow-light: var(--matilde-yellow-light);
+  --color-matilde-red: var(--matilde-red);
+  --color-matilde-red-dark: var(--matilde-red-dark);
+  --color-matilde-cream: var(--matilde-cream);
+  --color-matilde-brown: var(--matilde-brown);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Interactive affordance: always show pointer on clickable elements */
+  a[href],
+  button,
+  summary,
+  [role='button'] {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+}
+
+/* Browser scrollbar: smaller + branded */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--matilde-scrollbar-thumb) var(--matilde-scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: var(--matilde-scrollbar-size);
+  height: var(--matilde-scrollbar-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--matilde-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--matilde-scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--matilde-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+/* Landing: subtle vertical float for decorative elements */
+@keyframes matilde-float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, var(--matilde-float-amp, -12px), 0);
+  }
+}
+
+.matilde-float-y {
+  animation-name: matilde-float-y;
+  animation-duration: var(--matilde-float-dur, 7s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: var(--matilde-float-delay, 0s);
+  will-change: transform;
+}
