@@ -281,12 +281,12 @@ function ImageDialog({ image, existingImages, onSave, isSaving }: ImageDialogPro
           />
         </Field>
 
-        <DialogFooter className="flex items-center justify-between gap-2">
+        <DialogFooter className="flex flex-wrap justify-end gap-2">
           <DialogClose asChild>
             <Button
               type="button"
               variant="outline"
-              className={`${dashboardButtonClass} w-full border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light sm:w-auto`}
+              className={`${dashboardButtonClass} w-auto min-w-[8rem] border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light`}
             >
               Cancelar
             </Button>
@@ -294,7 +294,7 @@ function ImageDialog({ image, existingImages, onSave, isSaving }: ImageDialogPro
           <Button
             type="submit"
             disabled={isSaving || !alt.trim() || !url}
-            className={`${dashboardButtonClass} w-full bg-matilde-red text-white hover:bg-matilde-red-dark sm:w-auto`}
+            className={`${dashboardButtonClass} w-auto min-w-[8rem] bg-matilde-red text-white hover:bg-matilde-red-dark`}
           >
             {isSaving ? <Spinner className="mr-2 h-4 w-4" /> : <Save className="mr-2 h-4 w-4" />}
             Guardar

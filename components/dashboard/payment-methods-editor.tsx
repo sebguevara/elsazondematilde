@@ -94,7 +94,7 @@ export function PaymentMethodsEditor({ content, onSave, isSaving }: PaymentMetho
           {content.paymentMethods.map((method) => (
             <div
               key={method.id}
-              className={`flex items-center justify-between gap-4 rounded-2xl border px-4 py-3 transition-colors ${
+              className={`flex items-center justify-between rounded-2xl border px-3 py-3 transition-colors ${
                 method.enabled ? 'border-matilde-yellow bg-white' : 'border-transparent bg-gray-50'
               }`}
             >
@@ -103,17 +103,17 @@ export function PaymentMethodsEditor({ content, onSave, isSaving }: PaymentMetho
                 onCheckedChange={(v) => handleToggleEnabled(method.id, v)}
               />
               
-              <div className={`flex items-center gap-3 flex-1 ${!method.enabled && 'opacity-50'}`}>
+              <div className={`flex min-w-0 flex-1 items-center gap-2 ${!method.enabled && 'opacity-50'}`}>
                 {getIcon(method.name)}
                 <div>
-                  <p className="font-semibold text-matilde-brown">{method.name}</p>
+                  <p className="font-semibold text-matilde-brown truncate">{method.name}</p>
                   {method.details && (
-                    <p className="text-sm text-matilde-brown/60">{method.details}</p>
+                    <p className="text-sm text-matilde-brown/60 truncate">{method.details}</p>
                   )}
                 </div>
               </div>
 
-              <div className="flex min-w-[110px] items-center justify-end gap-2">
+              <div className="flex min-w-[90px] items-center justify-end gap-1">
                 <Button
                   variant="ghost"
                   size="icon"
@@ -121,7 +121,7 @@ export function PaymentMethodsEditor({ content, onSave, isSaving }: PaymentMetho
                     setEditingMethod(method)
                     setIsDialogOpen(true)
                   }}
-                  className={`${dashboardIconButtonClass} text-matilde-brown hover:bg-matilde-red/10 hover:text-matilde-red`}
+                  className={`${dashboardIconButtonClass} h-8 w-8 text-matilde-brown hover:bg-matilde-red/10 hover:text-matilde-red`}
                 >
                   <Pencil className="w-4 h-4" />
                 </Button>
@@ -129,7 +129,7 @@ export function PaymentMethodsEditor({ content, onSave, isSaving }: PaymentMetho
                   variant="ghost"
                   size="icon"
                   onClick={() => handleDeleteMethod(method.id)}
-                  className={`${dashboardIconButtonClass} text-matilde-brown hover:bg-red-50 hover:text-red-500`}
+                  className={`${dashboardIconButtonClass} h-8 w-8 text-matilde-brown hover:bg-red-50 hover:text-red-500`}
                 >
                   <Trash2 className="w-4 h-4" />
                 </Button>
@@ -201,7 +201,7 @@ function PaymentMethodDialog({ method, onSave, isSaving }: PaymentMethodDialogPr
           <Switch checked={enabled} onCheckedChange={setEnabled} />
           <span className="text-sm text-matilde-brown">Habilitado</span>
         </label>
-        <DialogFooter className="flex items-center justify-between gap-2">
+        <DialogFooter className="flex flex-wrap justify-end gap-2">
           <DialogClose asChild>
             <Button
               type="button"

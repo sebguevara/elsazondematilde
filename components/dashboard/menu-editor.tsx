@@ -361,12 +361,12 @@ function MenuItemDialog({ item, categories, onSave, isSaving }: MenuItemDialogPr
           Mostrar este producto en la landing
         </label>
 
-        <DialogFooter className="flex items-center justify-between gap-2">
+        <DialogFooter className="flex flex-wrap justify-end gap-2">
           <DialogClose asChild>
             <Button
               type="button"
               variant="outline"
-              className={`${dashboardButtonClass} w-full border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light sm:w-auto`}
+              className={`${dashboardButtonClass} w-auto min-w-[8rem] border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light`}
             >
               Cancelar
             </Button>
@@ -374,7 +374,7 @@ function MenuItemDialog({ item, categories, onSave, isSaving }: MenuItemDialogPr
           <Button
             type="submit"
             disabled={isSaving}
-            className={`${dashboardButtonClass} w-full bg-matilde-red text-white hover:bg-matilde-red-dark sm:w-auto`}
+            className={`${dashboardButtonClass} w-auto min-w-[8rem] bg-matilde-red text-white hover:bg-matilde-red-dark`}
           >
             {isSaving ? <Spinner className="mr-2 h-4 w-4" /> : <Save className="mr-2 h-4 w-4" />}
             Guardar
@@ -429,12 +429,12 @@ function CategoryDialog({ category, existingCategories, onSave, isSaving }: Cate
             min={1}
           />
         </Field>
-        <DialogFooter className="flex items-center justify-between gap-2">
+        <DialogFooter className="flex flex-wrap justify-end gap-2">
           <DialogClose asChild>
             <Button
               type="button"
               variant="outline"
-              className={`${dashboardButtonClass} w-full border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light sm:w-auto`}
+              className={`${dashboardButtonClass} w-auto min-w-[8rem] border-matilde-yellow text-matilde-brown hover:bg-matilde-yellow-light`}
             >
               Cancelar
             </Button>
@@ -442,7 +442,7 @@ function CategoryDialog({ category, existingCategories, onSave, isSaving }: Cate
           <Button
             type="submit"
             disabled={isSaving || !name.trim()}
-            className={`${dashboardButtonClass} w-full bg-matilde-red text-white hover:bg-matilde-red-dark sm:w-auto`}
+            className={`${dashboardButtonClass} w-auto min-w-[8rem] bg-matilde-red text-white hover:bg-matilde-red-dark`}
           >
             {isSaving ? <Spinner className="mr-2 h-4 w-4" /> : <Save className="mr-2 h-4 w-4" />}
             Guardar

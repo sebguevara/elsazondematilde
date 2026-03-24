@@ -43,6 +43,7 @@
     "@serwist/next": "^9.5.7",
     "@vercel/analytics": "1.6.1",
     "autoprefixer": "^10.4.20",
+    "better-sqlite3": "^12.8.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
@@ -68,13 +69,14 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/bun": "latest",
     "@types/node": "^22",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "postcss": "^8.5",
     "tailwindcss": "^4.2.0",
     "tw-animate-css": "1.3.3",
-    "typescript": "5.7.3",
-    "@types/bun": "latest"
+    "typescript": "5.7.3"
   }
 }
